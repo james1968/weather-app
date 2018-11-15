@@ -15,13 +15,11 @@ var geocodeAddress = (address, callback) => {
 		} else if (body.info.statuscode === 0) {
 			callback(undefined, {
 				address: body.results[0].locations[0].adminArea5,
-				Latitude: body.results[0].locations[0].latLng.lat,
-				Longitude: body.results[0].locations[0].latLng.lng
+				latitude: body.results[0].locations[0].latLng.lat,
+				longitude: body.results[0].locations[0].latLng.lng
 			})
 		}
 	});
 };
 
-module.exports = {
-  geocodeAddress
-};
+module.exports.geocodeAddress = geocodeAddress;
