@@ -23,8 +23,16 @@ axios.get(geocodeURL).then((response) => {
 	if (response.data.info.statuscode === 400) {
 		throw new Error('Unable to find address');
 	}
+
+	var lat = response.data.results[0].locations[0].latLng.lat;
+	var lng = response.data.results[0].locations[0].latLng.lng;
 	var weatherURL = `https://api.darksky.net/forecast/${WKEY}/${lat},${lng}`
-	console.log(response.data);
+	console.log(response.data.results[0].locations[0].adminArea5);
+	return axios.get(weatherURL);
+}).then((response) => {
+	var temperature = response.data.currently.temperature;
+	var apparentTemperature = response.data.currently.apparentTemperature;
+	console.log(`It is currently ${temperature} but it feels like ${apparentTemperature}`);
 }).catch((e) => {
 	if (e.code === 'ENOTFOUND') {
 			console.log('Unable to connect to API server');
